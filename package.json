@@ -1,0 +1,6 @@
+{
+  "name": "fund-me-sol",
+  "devDependencies": {
+    "hardhat": "^2.9.3"
+  }
+}

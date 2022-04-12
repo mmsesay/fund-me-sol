@@ -48,9 +48,13 @@ contract FundMe {
     return ethAmountInUsd; // 302.811000000000000000
   }
 
-  function withdraw() payable public {
-    // only the admin/owner can widthdraw funds
-    require(msg.sender == owner, "Only the owner can withdraw");
+  modifier onlyOwner {
+    // check for the admin/owner before perfoming an action
+    require(msg.sender == owner);
+    _;
+  }
+
+  function withdraw() payable onlyOwner public {
     msg.sender.transfer(address(this).balance );
   }
 }

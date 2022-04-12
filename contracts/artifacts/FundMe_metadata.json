@@ -6,6 +6,11 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -75,6 +80,26 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -115,10 +140,10 @@
 			]
 		},
 		"contracts/FundMe.sol": {
-			"keccak256": "0x72adf753097e3625f2683312cde5bb3281fbcec1f543bd4347c12d69c7ebe5aa",
+			"keccak256": "0xb3a7887b57fb3287811cf98da3d8a86e6a17e36687ab91b3febb6de7c9c24006",
 			"urls": [
-				"bzz-raw://66d22b27c65e7e7949cb9470e251fba37b663dd690de1f991a5a418fc650ac9f",
-				"dweb:/ipfs/QmVK1BMYT59vP6gkqwewTN8fTnp8JAdm9wmC6sxp6ZibB4"
+				"bzz-raw://665ef650d88832f9ca7816b0a36fcbda6e439151bf45d2d1eb99a2c8dda63965",
+				"dweb:/ipfs/Qmcr2zZ5SJE36SZs52CZ2jLERXZ2rgWiMsmSdFxai3RRCd"
 			]
 		}
 	},

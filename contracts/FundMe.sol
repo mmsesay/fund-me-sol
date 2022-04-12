@@ -6,7 +6,13 @@ import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol";
 
 contract FundMe {
+  using SafeMathChainlink for uint256;
   mapping(address => uint256) public addressToAmountFunded;
+  address public owner;
+
+  constructor() public {
+    owner = msg.sender;
+  }
 
   // payable:
   /*
@@ -40,5 +46,11 @@ contract FundMe {
     uint256 ethPrice = getPrice();
     uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
     return ethAmountInUsd; // 302.811000000000000000
+  }
+
+  function withdraw() payable public {
+    // only the admin/owner can widthdraw funds
+    require(msg.sender == owner, "Only the owner can withdraw");
+    msg.sender.transfer(address(this).balance );
   }
 }

@@ -9,6 +9,7 @@ contract FundMe {
   using SafeMathChainlink for uint256;
   mapping(address => uint256) public addressToAmountFunded;
   address public owner;
+  address[] public funders;
 
   constructor() public {
     owner = msg.sender;
@@ -27,6 +28,7 @@ contract FundMe {
     require(getConversionRate(msg.value) >= minimumUSD, "You need to spenf more ETH!");
 
     addressToAmountFunded[msg.sender] += msg.value;
+    funders.push(msg.sender);
   }
 
   function getVersion() public view returns (uint256) {
@@ -56,5 +58,12 @@ contract FundMe {
 
   function withdraw() payable onlyOwner public {
     msg.sender.transfer(address(this).balance );
+
+    // iterate over the funders
+    for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
+      address funder = funders[funderIndex];
+      addressToAmountFunded[funder] = 0;
+    }
+    funders = new address[](0); // reset the funders array
   }
 }

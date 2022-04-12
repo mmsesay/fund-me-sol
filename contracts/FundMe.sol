@@ -1,14 +1,25 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >0.8.0;
+pragma solidity >=0.6.0 <0.9.0;
 
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol";
 
 contract FundMe {
   mapping(address => uint256) public addressToAmountFunded;
 
-  // payable
+  // payable:
+  /*
+    Test Funding transaction
+    0.1 ETHER is 100000000000000000 WEI
+  */
   function fund() public payable {
+    // setting a minimum payable to 50 USD
+    uint256 minimumUSD = 50 * 10 * 18;
+
+    // check if 1gwei < $50
+    require(getConversionRate(msg.value) >= minimumUSD, "You need to spenf more ETH!");
+
     addressToAmountFunded[msg.sender] += msg.value;
   }
 
@@ -22,5 +33,12 @@ contract FundMe {
     (,int256 answer,,,) = priceFeed.latestRoundData();
     return uint256(answer);
     // 3,017.44772435 ETH to USD
+  }
+
+  // 1000000000 = 1 Gwei 
+  function getConversionRate(uint256 ethAmount) public view returns (uint256) {
+    uint256 ethPrice = getPrice();
+    uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
+    return ethAmountInUsd; // 302.811000000000000000
   }
 }
